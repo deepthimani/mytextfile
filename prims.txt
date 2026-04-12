@@ -1,0 +1,39 @@
+import heapq
+
+def prims(graph, start):
+    visited = set()
+    min_heap = [(0, start)]   # (weight, node)
+    total_cost = 0
+    mst = []
+
+    while min_heap:
+        weight, node = heapq.heappop(min_heap)
+
+        if node in visited:
+            continue
+
+        visited.add(node)
+        total_cost += weight
+
+        if weight != 0:
+            mst.append((node, weight))
+
+        for neighbor, edge_weight in graph[node]:
+            if neighbor not in visited:
+                heapq.heappush(min_heap, (edge_weight, neighbor))
+
+    return total_cost, mst
+
+
+# Graph (Adjacency List)
+graph = {
+    'A': [('B', 2), ('C', 3)],
+    'B': [('A', 2), ('C', 1), ('D', 1)],
+    'C': [('A', 3), ('B', 1), ('D', 4)],
+    'D': [('B', 1), ('C', 4)]
+}
+
+cost, mst = prims(graph, 'A')
+
+print("Minimum Cost:", cost)
+print("MST Edges:", mst)
