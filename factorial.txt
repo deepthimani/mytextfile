@@ -1,0 +1,78 @@
+# lab 01 - factorial and recursive 
+def factorial_recursive(n) :
+    if n==0 or n==1 :
+        return 1
+    else :
+        return n * factorial_recursive(n-1)
+n =4
+print("factorail recursive: ",factorial_recursive(n))
+
+#facotial using recursive
+def fact(n):
+    if n<0 :
+        raise TypeError(" n must be an positive integer")
+    if n==0 or n==1 :
+        return 1
+    return n * fact(n-1)
+n=5
+print(f"recursive function - {n}! : {fact(n)}")
+
+#factorial using iterative function 
+def factorial_iterative(n):
+    if n< 0:
+        raise TypeError("n musy be a postive interger")
+    output= 1
+    for i in range(2,n+1):
+        output = i* output #output *=i
+    return output
+
+#T(n) = c_1 + c_2 + n * c_3 -> 0(n)
+#S(n) = 0(1)-cinstant time 
+print(f"iterative function - {n}! : {factorial_iterative(n)}")
+
+
+# time complexity
+import time
+
+#iterative time complexity
+start = time.time()
+factorial_iterative(10000)
+end = time.time()
+print(" execution time for iteration ",end-start,"seconds")
+
+#time complexity using recursive 
+start = time.time()
+factorial_recursive(900)
+end = time.time()
+print(" execution time for recursion ",end-start,"seconds")
+
+
+#fibonacci 
+def fibonacci_recursive(n): 
+    if n ==0 :
+        return 0 
+    elif n ==1 :
+        return 1
+    else : 
+        return fibonacci_recursive(n-1) + fibonacci_recursive(n-2)
+n = 7 
+print("fibonacci recursive :", end= " ")
+for i in range (n) :
+    print(fibonacci_recursive (i), end= " ")
+print()
+
+
+def fibbonacci(n):
+    if n < 0 :
+        raise TypeError(" n must be postive interger ")
+    if n ==0 : 
+        return 0 
+    elif n==1 :
+        return 1 
+    else : 
+        return fibbonacci(n-1) + fibbonacci(n-2)
+n = 7 
+#print(f"fibbnacci series of {n} is : {fibbonacci}")
+for i in  range (n): 
+    print(fibbonacci(i),end ="")
+print()
