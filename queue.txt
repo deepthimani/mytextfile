@@ -1,0 +1,107 @@
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+
+class CircularQueue:
+    def __init__(self):
+        self.tail = None
+
+    def enqueue(self, data):
+        new_node = Node(data)
+
+        if self.tail is None:
+            self.tail = new_node
+            new_node.next = new_node
+        else:
+            new_node.next = self.tail.next
+            self.tail.next = new_node
+            self.tail = new_node
+
+    def dequeue(self):
+        if self.tail is None:
+            print("Queue is empty")
+            return
+
+        if self.tail.next == self.tail:
+            self.tail = None
+        else:
+            self.tail.next = self.tail.next.next
+
+    def is_empty(self):
+        return self.tail is None
+
+    def print_queue(self):
+        if self.tail is None:
+            print("Empty")
+            return
+
+        curr = self.tail.next
+        while True:
+            print(curr.data, end=" ")
+            curr = curr.next
+            if curr == self.tail.next:
+                break
+        print()
+cq = CircularQueue()
+
+for i in range(10):
+    cq.enqueue(i)
+
+print("Queue enqueued 0-9")
+
+for _ in range(5):
+    cq.dequeue()
+
+print("Dequeued 5, remaining:")
+cq.print_queue()
+
+
+
+import heapq
+
+pq = []
+
+# Insert elements
+heapq.heappush(pq, 10)
+heapq.heappush(pq, 5)
+heapq.heappush(pq, 20)
+heapq.heappush(pq, 1)
+
+print("Queue:", pq)
+
+# Remove smallest (highest priority)
+print("Removed:", heapq.heappop(pq))
+
+print("Top element:", pq[0])
+
+
+import heapq
+
+pq = []
+
+# Insert elements (negative for max heap)
+heapq.heappush(pq, -10)
+heapq.heappush(pq, -5)
+heapq.heappush(pq, -20)
+
+# Remove largest
+print("Removed:", -heapq.heappop(pq))
+
+
+class PriorityQueue:
+    def __init__(self):
+        self.queue = []
+
+    def insert(self, value):
+        self.queue.append(value)
+        self.queue.sort()   # simple but slower
+
+    def delete(self):
+        if len(self.queue) == 0:
+            return None
+        return self.queue.pop(0)   # remove smallest
+
+    def display(self):
+        print(self.queue)
