@@ -1,0 +1,200 @@
+# Z-test (manual, large-sample logic) 
+xbar <- 970 
+mu0 <- 1000 
+s <- 120 
+n <- 80 
+z <- (xbar - mu0) / (s / sqrt(n)) 
+z 
+
+# p-value 
+pnorm(z) 
+
+# (Practical) One-sample t-test 
+x <- rnorm(80, mean = 970, sd = 120) 
+t.test(x, mu = 1000, alternative = "less") 
+
+#Visual: One-Sample Z Test with Filled Critical Region 
+# Z values and density 
+z_vals <- seq(-4, 1, length = 1000) 
+dens <- dnorm(z_vals)
+
+# Plot normal curve 
+plot(z_vals, dens, type = "l", lwd = 2, 
+     main = "One-Sample Z Test (Left-Tailed)", 
+     xlab = "Z", ylab = "Density") 
+
+# Critical value 
+z_crit <- -1.645 
+
+# Shade left critical region 
+z_left <- z_vals[z_vals <= z_crit] 
+dens_left <- dnorm(z_left) 
+polygon(c(z_left, rev(z_left)), 
+        c(dens_left, rep(0, length(dens_left))), 
+        col = "lightcoral", border = NA) 
+
+# Observed Z 
+abline(v = z, col = "blue", lwd = 2) 
+
+# Legend 
+legend("topright", 
+       legend = c("Critical region", "Observed Z"), 
+       fill = c("lightcoral", NA), 
+       border = c(NA, NA), 
+       lwd = c(NA, 2), 
+       col = c(NA, "blue")) 
+
+# Z-test (manual) 
+xbar1 <- 72; xbar2 <- 68 
+s1 <- 10; s2 <- 12 
+n1 <- 60; n2 <- 55 
+z <- (xbar1 - xbar2) / sqrt((s1^2/n1) + (s2^2/n2)) 
+z 
+
+# p-value 
+2 * (1 - pnorm(abs(z))) 
+
+# Two-sample t-test (practical use) 
+x1 <- rnorm(60, mean = 72, sd = 10) 
+x2 <- rnorm(55, mean = 68, sd = 12) 
+t.test(x1, x2, alternative = "two.sided") 
+
+#Visual: Two-Tailed Z Test with Filled Critical Regions 
+# Z values and density 
+z_vals <- seq(-4, 4, length = 1000) 
+dens <- dnorm(z_vals) 
+
+# Plot normal curve 
+plot(z_vals, dens, type = "l", lwd = 2, 
+     main = "Two-Sample Z Test (Two-Tailed)", 
+     xlab = "Z", ylab = "Density") 
+
+# Critical value 
+z_crit <- 1.96 
+
+# Left critical region 
+z_left <- z_vals[z_vals <= -z_crit] 
+dens_left <- dnorm(z_left) 
+
+polygon(c(z_left, rev(z_left)), 
+        c(dens_left, rep(0, length(dens_left))), 
+        col = "lightcoral", border = NA) 
+
+# Right critical region 
+z_right <- z_vals[z_vals >= z_crit] 
+dens_right <- dnorm(z_right) 
+
+polygon(c(z_right, rev(z_right)), 
+        c(dens_right, rep(0, length(dens_right))), 
+        col = "lightcoral", border = NA) 
+
+# Observed Z 
+abline(v = z, col = "blue", lwd = 2) 
+
+# Legend 
+legend("topright", 
+       legend = c("Critical region", "Observed Z"), 
+       fill = c("lightcoral", NA), 
+       border = c(NA, NA), 
+       lwd = c(NA, 2), 
+       col = c(NA, "blue"))
+
+# Given data 
+x <- 220 
+n <- 400 
+p0 <- 0.60 
+
+# Sample proportion 
+phat <- x / n 
+
+# Z statistic 
+z <- (phat - p0) / sqrt(p0 * (1 - p0) / n) 
+z 
+
+# p-value 
+pnorm(z) 
+
+#Visual: One-Sample Proportion Test (Filled Left Tail) 
+z_vals <- seq(-4, 1, length = 1000) 
+dens <- dnorm(z_vals) 
+
+plot(z_vals, dens, type = "l", lwd = 2, 
+     main = "One-Sample Proportion Z Test (Left-Tailed)", 
+     xlab = "Z", ylab = "Density") 
+
+# Critical value 
+z_crit <- -1.645 
+
+#Visual: One-Sample Proportion Test (Filled Left Tail) 
+# Shade critical region 
+z_left <- z_vals[z_vals <= z_crit] 
+dens_left <- dnorm(z_left) 
+
+polygon(c(z_left, rev(z_left)), 
+        c(dens_left, rep(0, length(dens_left))), 
+        col = "lightcoral", border = NA) 
+
+# Observed Z 
+abline(v = z, col = "blue", lwd = 2) 
+
+legend("topright", 
+       legend = c("Critical region", "Observed Z"), 
+       fill = c("lightcoral", NA), 
+       border = c(NA, NA), 
+       lwd = c(NA, 2), 
+       col = c(NA, "blue")) 
+
+#Data given 
+x1 <- 45; n1 <- 300 
+x2 <- 60; n2 <- 250 
+
+p1 <- x1 / n1 
+p2 <- x2 / n2 
+
+# Pooled proportion 
+p_pool <- (x1 + x2) / (n1 + n2) 
+
+# Z statistic 
+z <- (p1 - p2) / sqrt(p_pool * (1 - p_pool) * (1/n1 + 1/n2)) 
+z 
+
+# p-value 
+2 * (1 - pnorm(abs(z))) 
+
+# Visuals: Two proportion test (Filled region) 
+
+z_vals <- seq(-4, 4, length = 1000) 
+dens <- dnorm(z_vals) 
+
+plot(z_vals, dens, type = "l", lwd = 2, 
+     main = "Two-Sample Proportion Z Test", 
+     xlab = "Z", ylab = "Density") 
+
+# Critical values 
+z_crit <- 1.96 
+
+# Left tail 
+z_left <- z_vals[z_vals <= -z_crit] 
+dens_left <- dnorm(z_left) 
+
+polygon(c(z_left, rev(z_left)), 
+        c(dens_left, rep(0, length(dens_left))), 
+        col = "lightcoral", border = NA) 
+
+# Right tail 
+z_right <- z_vals[z_vals >= z_crit] 
+dens_right <- dnorm(z_right) 
+
+polygon(c(z_right, rev(z_right)), 
+        c(dens_right, rep(0, length(dens_right))), 
+        col = "lightcoral", border = NA) 
+
+# Observed Z 
+abline(v = z, col = "blue", lwd = 2) 
+
+legend("topright", 
+       legend = c("Critical region", "Observed Z"), 
+       fill = c("lightcoral", NA), 
+       border = c(NA, NA), 
+       lwd = c(NA, 2), 
+       col = c(NA, "blue"))
