@@ -1,0 +1,92 @@
+# Create contingency table
+data1 <- matrix(c(40,60,20,80), nrow=2, byrow=TRUE)
+rownames(data1) <- c("Smokers", "NonSmokers")
+colnames(data1) <- c("LungDisease", "NoLungDisease")
+data1
+
+# Chi-square test
+test1 <- chisq.test(data1, correct=FALSE)
+test1
+
+# Conclusion using Critical Value Method
+df1 <- test1$parameter
+critical1 <- qchisq(0.95, df1)
+
+cat("\nCritical Value =", critical1, "\n")
+
+if(test1$statistic > critical1){
+  cat("Decision (Critical Value Method): Reject H0\n")
+} else {
+  cat("Decision (Critical Value Method): Fail to Reject H0\n")
+}
+
+# Side-by-side bar plot
+barplot(data1,
+        beside=TRUE,
+        col=c("steelblue","tomato"),
+        legend=rownames(data1),
+        main="Smoking vs Lung Disease",
+        ylab="Frequency")
+
+# Mosaic plot
+mosaicplot(data1,
+           color=TRUE,
+           main="Mosaic Plot: Smoking & Lung Disease")
+
+# Association plot
+assocplot(data1,
+          main="Association Plot: Smoking & Lung Disease")
+
+
+
+# Create contingency table
+data2 <- matrix(c(30,50,40,30), nrow=2, byrow=TRUE)
+rownames(data2) <- c("Male", "Female")
+colnames(data2) <- c("Online", "Offline")
+data2
+# Chi-square test
+test2<- chisq.test(data2, correct=FALSE)
+#Conclusion
+df2 <- test2$parameter
+critical2 <- qchisq(0.95, df2)
+cat("\nCritical Value =", critical2, "\n")
+if(test2$statistic > critical2){
+  cat("Decision (Critical Value Method): Reject H0\n")
+} else {
+  cat("Decision (Critical Value Method): Fail to Reject H0\n")
+}
+#Side by side bar plot
+barplot(data2,
+        beside=TRUE,
+        col=c("purple","orange"),
+        legend=rownames(data2),
+        main="Gender vs Shopping Preference",
+        ylab="Frequency")
+
+#Mosaic plot
+mosaicplot(data2,
+           color=TRUE,
+           main="Mosaic Plot: Gender & Preference")
+
+#Association plot
+assocplot(data2,
+          main="Association Plot: Gender & Preference")
+
+observed<-c(8,9,10,11,12,10)
+excepted<-rep(sum(observed)/6,6)
+observed
+excepted
+test11<-chisq.test(x=observed,p=rep(1/6,6))
+test11
+alpha<-0.05
+if(test11$p.value < alpha) {
+  print("reject h0 : the die is not fair")
+} else {
+  print("fail to reject h0  the die may be fair")
+}
+x<- seq(0,20,0.1)
+y<-dchisq(x,df=5)
+plot(x,y,type="l",lwd=2,
+     main="chisquare distribution df=5",
+     ylab="density",xlab="chi square value")
+abline(v=test11$statistic,col="red",lwd=2)
