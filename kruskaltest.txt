@@ -1,0 +1,180 @@
+# Data
+A <- c(12, 15, 14, 10, 13)
+B <- c(18, 20, 17, 22, 19)
+C <- c(25, 27, 26, 24, 28)
+
+# Combine data
+values <- c(A, B, C)
+group <- factor(c(rep("A", length(A)),
+                  rep("B", length(B)),
+                  rep("C", length(C))))
+
+# Kruskal-Wallis test
+kruskal.test(values ~ group)
+#Boxplot
+boxplot(values ~ group,
+        main = "Kruskal-Wallis Test: Boxplot",
+        xlab = "Groups",
+        ylab = "Values")
+##Mean Rank Plot
+ranks <- rank(values)
+mean_ranks <- tapply(ranks, group, mean)
+
+plot(mean_ranks,
+     type = "b",
+     pch = 19,
+     xlab = "Group",
+     ylab = "Mean Rank",
+     main = "Mean Rank Comparison")
+#Density Plot
+plot(density(A), lwd = 2, main = "Density Comparison")
+
+lines(density(B), lwd = 2)
+lines(density(C), lwd = 2)
+
+legend("topleft",
+       legend = c("A", "B", "C"),
+       lwd = 2)
+##Dunn Test
+# Install if needed
+install.packages("FSA")
+
+library(FSA)
+
+
+
+dunnTest(values ~ group, method = "bonferroni")
+
+##Problem 2
+
+# ============================================================
+# KRUSKAL–WALLIS H-TEST (4 GROUPS) — COMPLETE LAB SCRIPT
+# ============================================================
+
+# -------------------------------
+# 1. DATA INPUT
+# -------------------------------
+A <-c(65, 70, 68, 72, 66)
+
+
+
+B <-c(75, 78, 74, 77, 76)
+C <-c(80, 82, 85, 81, 83)
+D <-c(60, 62, 58, 61, 59)
+
+# -------------------------------
+# 2. COMBINE DATA
+# -------------------------------
+values <- c(A, B, C, D)
+
+group <- factor(c(rep("A", length(A)),
+                  rep("B", length(B)),
+                  rep("C", length(C)),
+                  rep("D", length(D))))
+
+# -------------------------------
+# 3. BASIC SUMMARY
+# -------------------------------
+cat("Summary of Data:\n")
+print(tapply(values, group, summary))
+
+# -------------------------------
+# 4. KRUSKAL–WALLIS TEST
+# -------------------------------
+kw_result <- kruskal.test(values ~ group)
+
+
+
+
+
+
+cat("\nKruskal-Wallis Test Result:\n")
+print(kw_result)
+
+# -------------------------------
+# 5. VISUALIZATION 1: BOXPLOT
+# -------------------------------
+boxplot(values ~ group,
+        main = "Boxplot for 4 Groups",
+        xlab = "Groups",
+        ylab = "Scores")
+
+# -------------------------------
+# 6. VISUALIZATION 2: STRIPCHART
+# -------------------------------
+stripchart(values ~ group,
+           vertical = TRUE,
+           method = "jitter",
+           pch = 19,
+           main = "Stripchart for 4 Groups")
+
+
+# 7. VISUALIZATION 3: MEAN RANK PLOT
+
+ranks <- rank(values)
+mean_ranks <- tapply(ranks, group, mean)
+
+
+plot(mean_ranks,
+     type = "b",
+     pch = 19,
+     xlab = "Group",
+     ylab = "Mean Rank",
+     main = "Mean Rank Comparison")
+
+# 8. VISUALIZATION 4: DENSITY PLOT
+
+plot(density(A), lwd = 2, main = "Density Comparison")
+lines(density(B), lwd = 2)
+lines(density(C), lwd = 2)
+lines(density(D), lwd = 2)
+
+legend("topright",
+       legend = c("A", "B", "C", "D"),
+       lwd = 2)
+
+
+# 9. POST-HOC TEST (DUNN TEST)
+
+# Install once if needed:
+# install.packages("FSA")
+
+library(FSA)
+
+cat("\nPost-hoc Dunn Test:\n")
+print(dunnTest(values ~ group, method = "bonferroni"))
+
+# -------------------------------
+# 10. INTERPRETATION GUIDE
+# -------------------------------
+cat("\nInterpretation:\n")
+cat("If p-value < 0.05 → Reject H0 (groups differ)\n")
+cat("If p-value >= 0.05 → No significant difference\n")
+
+# -------------------------------
+# 11. AUTOMATED CONCLUSION
+# -------------------------------
+
+alpha <- 0.05
+p_value <- kw_result$p.value
+
+cat("\nFinal Conclusion:\n")
+
+if (p_value < alpha) {
+  cat("p-value =", p_value, "<", alpha, "\n")
+  cat("Reject H0: There is a significant difference among the groups.\n")
+} else {
+  cat("p-value =", p_value, ">=", alpha, "\n")
+  cat("Fail to Reject H0: No significant difference among the groups.\n")
+}
+
+
+
+
+
+
+
+
+
+
+
