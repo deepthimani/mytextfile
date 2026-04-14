@@ -1,0 +1,16 @@
+summary(cars)
+x<-c("A","B","C","D","E","F")
+y<-c(2,4,6,8,10,3)
+barplot(y, names.arg = x, col = "blue")
+barplot(table(mtcars$cyl),main= "no of cylinders",col="green")
+boxplot(mtcars$mpg,col="yellow")
+data(mtcars)
+boxplot(mpg ~ gear,data=mtcars,
+        col=c("lightgreen","green","darkgreen"),
+        xlab="no of gears",ylab="miles per gallon")
+hist(mtcars$mpg,col="yellow")
+hist(mtcars$mpg,col="green",breaks=10,border="black")
+den=density(mtcars$mpg)
+plot(den,col="red")
+pie(table(mtcars$gear),main="gears",radius=1,col.main="darkgreen")
+
