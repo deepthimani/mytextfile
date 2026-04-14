@@ -1,0 +1,51 @@
+s1_sq <- 25
+s2_sq <- 10
+n1 <- 10
+n2 <- 12
+alpha <- 0.05
+
+# F statistic
+f_cal <- s1_sq / s2_sq
+f_cal
+df1 <- n1 - 1
+df1
+df2 <- n2 - 1
+df2
+
+# Critical values (two-tailed test)
+f_upper <- qf(1 - alpha/2, df1, df2)
+f_upper
+f_lower <- 1 / qf(1 - alpha/2, df2, df1)
+f_lower
+# F distribution
+x <- seq(0, 6, length = 1000)
+y <- df(x, df1, df2)
+
+plot(x, y, type = "l", lwd = 2,
+     main = "F Distribution with Colored Rejection Regions",
+     xlab = "F value",
+     ylab = "Density")
+
+# Left rejection region
+x_left <- seq(0, f_lower, length = 1000)
+y_left <- df(x_left, df1, df2)
+polygon(c(0, x_left, f_lower),
+        c(0, y_left, 0),
+        col = "red")
+
+# Right rejection region
+x_right <- seq(f_upper, 6, length = 1000)
+y_right <- df(x_right, df1, df2)
+
+polygon(c(f_upper, x_right, 6),
+        c(0, y_right, 0),
+        col = "red")
+
+# Critical value lines
+abline(v = f_lower, lty = 2, lwd = 2)
+abline(v = f_upper, lty = 2, lwd = 2)
+
+
+# Observed F value
+abline(v = f_cal, col = "blue", lwd = 2)
+
