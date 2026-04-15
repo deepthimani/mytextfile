@@ -1,0 +1,59 @@
+# Sample datasets
+A = c(12,15,14,10,13,16,14)
+B = c(8,9,7,10,6,9,8)
+# Variances
+var_A = var(A)
+var_B = var(B)
+# F statistic
+F_stat = var_A / var_B
+df1 = length(A)-1
+df2 = length(B)-1
+# One-tailed p-value
+p_value = pf(F_stat, df1, df2, lower.tail = FALSE)
+print(F_stat)
+print(p_value)
+# Decision
+alpha = 0.05
+if(p_value < alpha){
+  print("Reject H0: Variance of A is greater than variance of B")
+} else {
+  print("Fail to Reject H0")
+}
+# Graphical representation
+x = seq(0,5,0.01)
+y = df(x,df1,df2)
+plot(x,y,type="l",lwd=2,
+     main="F Distribution (One-Tailed Test)",
+     xlab="F value",ylab="Density")
+abline(v=F_stat,col="red",lwd=2)
+
+#Problem 2
+# Sample datasets
+X = c(20,22,19,24,21,23)
+Y = c(18,17,20,16,19,18)
+# Variances
+var_X = var(X)
+var_Y = var(Y)
+# F statistic
+F_stat = var_X / var_Y
+df1 = length(X)-1
+df2 = length(Y)-1
+# Two-tailed p-value
+p_value = 2 * min(pf(F_stat, df1, df2),
+                   1 - pf(F_stat, df1, df2))
+print(F_stat)
+print(p_value)
+# Decision
+alpha = 0.05
+if(p_value < alpha){
+  print("Reject H0: Variances are not equal")
+} else {
+  print("Fail to Reject H0: Variances are equal")
+}
+# Graphical representation
+x = seq(0,5,0.01)
+y = df(x,df1,df2)
+plot(x,y,type="l",lwd=2,
+     main="F Distribution (Two-Tailed Test)",
+     xlab="F value",ylab="Density")
+abline(v=F_stat,col="blue",lwd=2)
