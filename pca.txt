@@ -1,0 +1,36 @@
+import numpy as np
+import pandas as pd
+from sklearn.decomposition import PCA
+from sklearn.preprocessing import StandardScaler
+import matplotlib.pyplot as plt
+
+#synthetic data
+np.random.seed(42)
+X = np.random.randint(100, size = (100,3))
+X_dataset = pd.DataFrame(X)
+print(X_dataset.head())
+
+#step 1 : standardize the data
+scaler = StandardScaler()
+X_std = scaler.fit_transform(X_dataset)
+print(np.mean(X_std)),print(np.std(X_std))
+X_std_dataset = pd.DataFrame(X_std)
+print(X_std_dataset.head())
+
+#step 2-5: PCA
+pca = PCA(n_components = 2)
+X_pca = pca.fit_transform(X_std_dataset)
+print(X_pca.shape)
+print(X_pca)
+
+#plot explained variance ratio
+
+explained_var_ratio = pca.explained_variance_ratio_
+print('Explained variance per principal component:{}'.format(pca.explained_variance_ratio_))
+cumulative_var_ratio = np.cumsum(explained_var_ratio)
+print('cumulative variances:{}'.format(cumulative_var_ratio))
+plt.plot(range(1,len(cumulative_var_ratio)+1),cumulative_var_ratio, marker = 'o')
+plt.xlabel ("number of principal components")
+plt.ylabel("cumulative explained variance ratio")
+plt.title("cumulative variance ratio vs number of principal components")
+plt.show()
