@@ -99,3 +99,25 @@ plt.show()
 
 a = sns.violinplot(x = 'Age', y = 'Job', data = df1)
 plt.show()
+
+
+import pandas as pd
+
+data = {"Name": [" john ", "ALICE", "bOb"],
+        "room": ["deep","CS","chidu"]}
+
+df = pd.DataFrame(data)
+
+df["room"]=df["room"].str.upper()
+print(df)
+# Remove spaces
+df["Name"] = df["Name"].str.strip()
+print(df)
+# Convert to lowercase
+df["Name"] = df["Name"].str.lower()
+print(df)
+# Convert to title case
+df["Name"] = df["Name"].str.title()
+
+print(df)
+
