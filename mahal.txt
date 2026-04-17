@@ -1,0 +1,42 @@
+import numpy as np
+import pandas as pd
+from scipy.spatial.distance import mahalanobis
+from scipy.stats import chi2
+
+# Dataset
+data = {
+    "Age":[21,22,23,24,25,90],
+    "Salary":[30000,32000,31000,30500,33000,200000]
+}
+
+df = pd.DataFrame(data)
+
+# Mean of variables
+mean = df.mean()
+
+# Covariance matrix
+cov = np.cov(df.values, rowvar=False)
+
+# Inverse covariance matrix
+inv_cov = np.linalg.inv(cov)
+
+# Calculate Mahalanobis distance
+distances = []
+
+for i in range(len(df)):
+    d = mahalanobis(df.iloc[i], mean, inv_cov)
+    distances.append(d)
+
+df["Mahalanobis_Distance"] = distances
+
+# Threshold using Chi-square distribution
+threshold = np.sqrt(chi2.ppf(0.975, df=2))
+
+# Detect outliers
+outliers = df[df["Mahalanobis_Distance"] > threshold]
+
+print("Mahalanobis Distances:")
+print(df)
+
+print("\nOutliers detected:")
+print(outliers)
