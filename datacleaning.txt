@@ -1,0 +1,101 @@
+import pandas as pd
+
+data = {
+    "Marks": [80, 75, 90, 85, 70]
+}
+
+df = pd.DataFrame(data)
+marks = df["Marks"]
+
+mean_val = marks.mean()
+median_val = marks.median()
+max_val = marks.max()
+min_val = marks.min()
+std_val = marks.std()
+
+print("Mean:", mean_val)
+print("Median:", median_val)
+print("Max:", max_val)
+print("Min:", min_val)
+print("Std Dev:", std_val)
+print(df.describe())
+print(df.describe().T)
+
+  
+
+import pandas as pd
+
+data = {
+    "Name": ["John", "Alice", "Bob", None],
+    "Age": [25, None, 30, 28],
+    "Salary": [50000, 60000, None, 52000]
+}
+
+df = pd.DataFrame(data)
+
+print("Original Data")
+print(df)
+
+print(df.isnull().sum())
+
+df["Age"] = df["Age"].fillna(df["Age"].mean())
+df["Name"] = df["Name"].fillna("Unknown")
+df["Salary"] = df["Salary"].fillna(df["Salary"].mean())
+
+print("After Cleaning")
+print(df)
+
+  import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns 
+
+
+df = pd.read_csv("salaries.csv")
+print(df)
+print(df.groupby(['Salary']))
+print(type(df['Salary'].iloc[0]))
+print(df.groupby('Age')['Salary'].mean())
+print(df[df['Salary']>1200])
+print(df[df['Job']== 'Dentist'])
+print(df[10:20])
+print(df.loc[10:20,['Age','Salary']])
+print(df.iloc[10:20, [0, 1, 2]])
+
+print(df.iloc[-1])
+print(df.iloc[::,-1])
+print(df.iloc[2:3,5:6])
+print(df.iloc[[2,3],[1,1]])
+
+
+print(df.sort_values(by = ['Salary']))
+print(df.sort_values(by = ['Salary','Age'], ascending = [True,False]))
+print(df[df.isnull()])
+print(df[df.isnull().any(axis = 1)])
+#print(df[df.isnull().sum(axis = 1)]) # showing error
+
+
+df1 = pd.read_csv('salaries.csv')
+print(df1)
+
+g = plt.hist(df1['Salary'],ec = 'black',bins = 20)
+plt.xlabel('x axis')
+plt.ylabel('y axis')
+plt.title('salary')
+plt.show()
+
+b = sns.boxplot(df1)
+plt.show()
+
+df1['Salary'].head(10).plot(kind='box') 
+plt.show()
+
+df1.loc[2:5, 'Salary'].plot(kind='box') 
+plt.show()
+
+df1[['Age', 'Salary']].iloc[1:5].plot(kind='box') 
+plt.show()
+
+
+a = sns.violinplot(x = 'Age', y = 'Job', data = df1)
+plt.show()
