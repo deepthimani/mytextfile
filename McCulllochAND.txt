@@ -1,0 +1,25 @@
+import numpy as np
+
+#may 18
+
+#implementing various learning
+#McCullloch Pitts AND Gate
+def mccullochAND(inp):
+  weights=np.array([1,1])
+  thresold=2
+  output=[]
+
+  for i in inp:
+    dot_prod=np.dot(i,weights)
+    if dot_prod>=thresold:
+      output.append(1)
+    else:
+      output.append(0)
+  return output
+
+
+
+
+# Example usage:
+inp = np.array([[0,0], [0,1], [1,0], [1,1]])
+print("AND Gate output :", mccullochAND(inp))
